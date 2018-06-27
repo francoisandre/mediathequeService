@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xs="http://www.w3.org/2001/XMLSchema"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:beans="http://cxf.apache.org/configuration/beans"
+       xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xmlns:soap="http://cxf.apache.org/bindings/soap"
+       xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+       xmlns:wsdl="http://schemas.xmlsoap.org/wsdl"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                           http://www.cxf.apache.org/bindings/soap
+                           http://www.cxf.apache.org/bindings/schemas/configuration/soap.xsd
+                           http://cxf.apache.org/jaxws
+                           http://cxf.apache.org/schemas/jaxws.xsd
+                           http://java.sun.com/xml/ns/jaxb
+                           http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd">
+
+
+    <jaxws:server serviceClass="test.mas.ws.service.v1_0.IMediathequeService"
+        address="/mediatheque/v1_0" serviceBean="#mediatheque_v1_0">
+	</jaxws:server>
+    
+    <jaxws:server serviceClass="test.mas.ws.service.v2_0.IMediathequeService"
+        address="/mediatheque/v2_0" serviceBean="#mediatheque_v2_0">
+    </jaxws:server>
+    
+     <jaxws:server serviceClass="test.mas.ws.service.v3_0.IMediathequeService"
+        address="/mediatheque/v3_0" serviceBean="#mediatheque_v3_0">
+	</jaxws:server>
+    
+    <jaxws:server serviceClass="test.mas.ws.service.v4_0.IMediathequeService"
+        address="/mediatheque/v4_0" serviceBean="#mediatheque_v4_0">
+    </jaxws:server>
+    
+  
+    <bean id="mediatheque_v1_0" class="test.mas.ws.service.v1_0.MediathequeServiceImpl" >
+    	<property name="next" ref="mediatheque_v2_0" />
+    </bean>
+    
+    <bean id="mediatheque_v2_0" class="test.mas.ws.service.v2_0.MediathequeServiceImpl" >
+    	<property name="next" ref="mediatheque_v3_0" />
+    </bean>
+    
+    <bean id="mediatheque_v3_0" class="test.mas.ws.service.v3_0.MediathequeServiceImpl" >
+    	<property name="next" ref="mediatheque_v4_0" />
+    </bean>
+    
+    <bean id="mediatheque_v4_0" class="test.mas.ws.service.v4_0.MediathequeServiceImpl" >
+    </bean>
+    
+  
+
+</beans>
